@@ -7,7 +7,7 @@ class HomeController extends Controller {
   }
 
   getSampleResponse(req, res) {
-    throw SampleException.sample('Sample record not found');
+    throw SampleException.sample('Sample not found');
   }
 }
 

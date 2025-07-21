@@ -5,7 +5,7 @@ dotenv.config();
 global.__src = `${__dirname}/src`;
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.APP_PORT || 3000;
 
 const apiRouter = require('./routes/api');
 app.use('/', apiRouter);
