@@ -1,4 +1,4 @@
-const ResponseError = require('../responses/ResponseError');
+const ResponseError = require(`${__src}/responses/ResponseError`);
 
 class ErrorHandler {
     static handle(err, req, res, next) {

@@ -1,5 +1,5 @@
-const Controller = require('./Controller');
-const SampleException = require('../exceptions/SampleException');
+const Controller = require(`${__src}/controllers/Controller`);
+const SampleException = require(`${__src}/exceptions/SampleException`);
 
 class HomeController extends Controller {
   constructor() {
