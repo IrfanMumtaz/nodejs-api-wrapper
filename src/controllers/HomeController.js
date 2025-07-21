@@ -5,12 +5,11 @@ const HomeResource = require(`${__src}/resources/HomeResource`);
 class HomeController extends Controller {
 
     getCollectionResponse(req, res) {
-        return res.json(new HomeResource([{id: 1, user: "irfan"}]))
+        return this.response(res, new HomeResource([{ id: 1, user: "irfan" }]));
     }
     
     getSingleResponse(req, res) {
-        return res.json(new HomeResource({id: 1, user: "irfan", email: "irfan@gmail.com"}))
-        
+        return this.response(res, new HomeResource({ id: 1, user: "irfan" }));
     }
     
     getErrorResponse(req, res) {
