@@ -1,4 +1,4 @@
-class ResponseError {
+class ErrorResource {
   constructor({ error = {}, message = '', data = {} } = {}) {
     this.data = data;
     this.error = error;
@@ -7,4 +7,4 @@ class ResponseError {
   }
 }
 
-module.exports = ResponseError; 
+module.exports = ErrorResource; 

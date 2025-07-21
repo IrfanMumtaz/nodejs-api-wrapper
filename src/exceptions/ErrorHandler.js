@@ -1,11 +1,10 @@
-const ResponseError = require(`${__src}/responses/ResponseError`);
+const ErrorResource = require(`${__src}/resources/ErrorResource`);
 
 class ErrorHandler {
     static handle(err, req, res, next) {
 
-        const response = new ResponseError({
+        const response = new ErrorResource({
             error: {
-                name: err.name,
                 stack: process.env.APP_ENV === 'production' ? "Oops! Something went wrong." : err.stack,
                 code: err.code || 500
             },

@@ -4,6 +4,8 @@ const router = express.Router();
 
 const homeController = new HomeController();
 
-router.get('/sample', (req, res) => homeController.getSampleResponse(req, res));
+router.get('/collection', (req, res) => homeController.getCollectionResponse(req, res));
+router.get('/single', (req, res) => homeController.getSingleResponse(req, res));
+router.get('/error', (req, res) => homeController.getErrorResponse(req, res));
 
 module.exports = router; 
