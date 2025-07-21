@@ -12,6 +12,14 @@
   "dependencies": {
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
-    "joi": "^17.13.3"
+    "joi": "^17.13.3",
+    "module-alias": "^2.2.3"
+  },
+  "_moduleAliases": {
+    "@controllers": "src/controllers",
+    "@exceptions": "src/exceptions",
+    "@middlewares": "src/middlewares",
+    "@requests": "src/requests",
+    "@resources": "src/resources"
   }
 }

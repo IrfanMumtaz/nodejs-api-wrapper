@@ -1,4 +1,4 @@
-const ValidationException = require("../exceptions/ValidationException");
+const ValidationException = require("@exceptions/ValidationException");
 
 class ValidationMiddleware{
     

@@ -1,4 +1,4 @@
-const ResponseException = require(`${__src}/exceptions/ResponseException`)
+const ResponseException = require(`@exceptions/ResponseException`)
 
 class BaseResource{
     
@@ -21,7 +21,7 @@ class BaseResource{
             }
         }
         else {
-            throw ResponseException.notObject("This operation requires data type to be Object.")
+            throw ResponseException.dataTypeMismatch("This operation requires data type to be Object or Array.")
         }
     }
 }

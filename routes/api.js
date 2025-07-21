@@ -1,9 +1,9 @@
 const express = require('express');
-const Validation = require(`${__src}/middlewares/ValidationMiddleware`);
+const Validation = require(`@middlewares/ValidationMiddleware`);
 const router = express.Router();
 
-const HomeController = require(`${__src}/controllers/HomeController`);
-const UserRequest = require(`${__src}/requests/UserRequest`);
+const HomeController = require(`@controllers/HomeController`);
+const UserRequest = require(`@requests/UserRequest`);
 
 const homeController = new HomeController();
 

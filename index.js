@@ -1,8 +1,8 @@
 const express = require('express');
 const dotenv = require('dotenv');
+require('module-alias/register');
 
 dotenv.config();
-global.__src = `${__dirname}/src`;
 
 const app = express();
 app.use(express.json());
@@ -12,7 +12,7 @@ const apiRouter = require('./routes/api');
 app.use('/api', apiRouter);
 
 
-const ErrorHandler = require(`${__src}/exceptions/ErrorHandler`);
+const ErrorHandler = require(`@exceptions/ErrorHandler`);
 app.use(ErrorHandler.routeNotFound)
 app.use(ErrorHandler.handle);
 

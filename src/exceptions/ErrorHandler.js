@@ -1,5 +1,5 @@
-const RouteException = require(`${__src}/exceptions/RouteException`);
-const ErrorResource = require(`${__src}/resources/ErrorResource`);
+const RouteException = require(`@exceptions/RouteException`);
+const ErrorResource = require(`@resources/ErrorResource`);
 
 class ErrorHandler {
     static handle(err, req, res, next) {

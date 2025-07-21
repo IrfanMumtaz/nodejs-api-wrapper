@@ -1,4 +1,4 @@
-const BaseException = require(`${__src}/exceptions/BaseException`);
+const BaseException = require(`@exceptions/BaseException`);
 
 class SampleException extends BaseException {
 

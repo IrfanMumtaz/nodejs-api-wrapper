@@ -1,6 +1,6 @@
-const Controller = require(`${__src}/controllers/Controller`);
-const SampleException = require(`${__src}/exceptions/SampleException`);
-const HomeResource = require(`${__src}/resources/HomeResource`);
+const Controller = require(`@controllers/Controller`);
+const SampleException = require(`@exceptions/SampleException`);
+const HomeResource = require(`@resources/HomeResource`);
 
 class HomeController extends Controller {
 

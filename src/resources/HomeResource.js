@@ -1,5 +1,4 @@
-const SuccessResource = require("./SuccessResource");
-const BaseResource = require(`${__src}/resources/BaseResource`);
+const BaseResource = require(`@resources/BaseResource`);
 
 class HomeResource extends BaseResource{
 
@@ -8,7 +7,6 @@ class HomeResource extends BaseResource{
         return {
             "id": data.id,
             "user": data.user,
-            email: new SuccessResource({})
         }
     }
 }

@@ -1,18 +1,15 @@
-const BaseException = require(`${__src}/exceptions/BaseException`);
+const BaseException = require(`@exceptions/BaseException`);
 
 class ResponseException extends BaseException {
 
-    constructor(message = 'Not Object', code = 500) {
+    constructor(message = 'Data type mismatch', code = 500) {
         super(message, code, 500);
     }
 
-    static notObject(msg = null) {
-        return new ResponseException(msg || "Not Object")
+    static dataTypeMismatch(msg = null) {
+        return new ResponseException(msg || "Data type mismatch")
     }
     
-    static notArray(msg = null) {
-        return new ResponseException(msg || "Not Array")
-    }
 }
 
 module.exports = ResponseException; 
