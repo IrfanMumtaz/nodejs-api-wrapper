@@ -4,7 +4,9 @@ class SuccessResource extends BaseResource{
 
     
     static setData(data) {
-        return {}
+        return {
+            email: "irfan@gmail.com"
+        }
     }
 }
 
