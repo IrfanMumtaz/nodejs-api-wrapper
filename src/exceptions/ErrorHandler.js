@@ -1,3 +1,4 @@
+const RouteException = require(`${__src}/exceptions/RouteException`);
 const ErrorResource = require(`${__src}/resources/ErrorResource`);
 
 class ErrorHandler {
@@ -11,7 +12,11 @@ class ErrorHandler {
         message: err.message || 'Internal Server Error',
         });
         res.status(err.status || 500).json(response);
-  }
+    }
+
+    static routeNotFound(err, req, next) {
+        throw RouteException.badRoute();
+    }
 }
 
 module.exports = ErrorHandler; 
