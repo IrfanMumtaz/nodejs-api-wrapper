@@ -1,8 +1,10 @@
 const express = require('express');
 const dotenv = require('dotenv');
-require('module-alias/register');
-
 dotenv.config();
+
+require('module-alias/register');
+require('./config/db')
+
 
 const app = express();
 app.use(express.json());

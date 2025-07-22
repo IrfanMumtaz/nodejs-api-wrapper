@@ -6,7 +6,7 @@ class HomeResource extends BaseResource{
     static setData(data) {
         return {
             "id": data.id,
-            "user": data.user,
+            "name": data.name,
         }
     }
 }
