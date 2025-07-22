@@ -1,14 +1,38 @@
 {
-  "name": "wrapper",
+  "name": "nodejs-api-wrapper",
   "version": "1.0.0",
+  "description": "A comprehensive Node.js API wrapper with centralized exception handling, middleware management, and structured architecture for building scalable REST APIs.",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": [
+    "nodejs",
+    "express",
+    "api",
+    "wrapper",
+    "middleware",
+    "exception-handling",
+    "rest-api",
+    "sutando",
+    "orm"
+  ],
+  "author": {
+    "name": "Irfan Mumtaz",
+    "email": "im.irfanmumtaz21@gmail.com",
+    "url": "https://github.com/irfanmumtaz"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/irfan/nodejs-api-wrapper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/irfan/nodejs-api-wrapper/issues"
+  },
+  "homepage": "https://github.com/irfan/nodejs-api-wrapper#readme",
   "dependencies": {
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
