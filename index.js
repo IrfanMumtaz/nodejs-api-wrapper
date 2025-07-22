@@ -3,8 +3,9 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 require('module-alias/register');
-require('./config/db')
+require('@config/db')
 
+require('@cron/CronRegistry');
 
 const app = express();
 app.use(express.json());
@@ -15,7 +16,7 @@ app.use('/api', apiRouter);
 
 
 const ErrorHandler = require(`@exceptions/ErrorHandler`);
-app.use(ErrorHandler.routeNotFound)
+app.use(ErrorHandler.badRoute)
 app.use(ErrorHandler.handle);
 
 const port = process.env.APP_PORT || 3000;

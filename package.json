@@ -40,12 +40,15 @@
     "module-alias": "^2.2.3",
     "mysql": "^2.18.1",
     "mysql2": "^3.14.2",
+    "node-cron": "^4.2.1",
     "pg": "^8.16.3",
     "sqlite3": "^5.1.7",
     "sutando": "^1.7.2"
   },
   "_moduleAliases": {
+    "@config": "config",
     "@controllers": "src/controllers",
+    "@cron": "cron",
     "@exceptions": "src/exceptions",
     "@middlewares": "src/middlewares",
     "@models": "./src/models",
