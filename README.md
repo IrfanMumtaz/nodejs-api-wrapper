@@ -26,14 +26,14 @@ This project is designed to provide a robust foundation for building REST APIs w
 ```
 ├── src/
 │   ├── controller/          # Controller classes
-│   ├── model/              # Data models
-│   ├── exceptions/         # Custom exception classes
-│   ├── requests/           # Request validation
-│   └── responses/          # Response formatting
-├── routes/                 # API route definitions
-├── index.js               # Application entry point
-├── package.json           # Dependencies and scripts
-└── .env                   # Environment variables
+│   ├── model/               # Data models
+│   ├── exceptions/          # Custom exception classes
+│   ├── requests/            # Request validation
+│   └── resources/           # Response formatting
+├── routes/                  # API route definitions
+├── index.js                 # Application entry point
+├── package.json             # Dependencies and scripts
+└── .env                     # Environment variables
 ```
 
 ## Installation
@@ -118,6 +118,40 @@ class RouteException extends BaseException {
 }
 
 module.exports = RouteException; 
+```
+
+### Request Validation
+Create custom request validation class in requests folder using joi:
+
+```javascript
+const Joi = require('joi');
+
+const UserRequest = Joi.object({
+    name: Joi.string().alphanum().min(3).max(30).required(),
+});
+
+module.exports = UserRequest
+```
+
+
+### Resource Structuring
+Create custom Resource class for the structuring the response data in a unified way:
+
+```javascript
+const BaseResource = require(`@resources/BaseResource`);
+
+class HomeResource extends BaseResource{
+
+    
+    static setData(data) {
+        return {
+            "id": data.id,
+            "name": data.name,
+        }
+    }
+}
+
+module.exports = HomeResource
 ```
 
 ## API Routes
@@ -359,4 +393,4 @@ For more information about the MIT License, visit [choosealicense.com](https://c
 
 ## Support
 
-For questions and support, please open an issue in the GitHub repository. 
+For questions and support, please open an issue in the GitHub repository.
