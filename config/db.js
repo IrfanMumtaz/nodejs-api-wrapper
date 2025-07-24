@@ -8,8 +8,6 @@ sutando.addConnection({
         user : process.env.DB_USER,
         password : process.env.DB_PASSWORD,
         database: process.env.DB_DATABASE,
-        ssl: {
-            rejectUnauthorized: false
-        }
+        ssl: process.env.PGSSL === 'true' ? { rejectUnauthorized: false } : false,
     },
 });
