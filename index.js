@@ -11,13 +11,15 @@ const app = express();
 app.use(express.json());
 
 
-const apiRouter = require('./routes/api');
-app.use('/api', apiRouter);
+const routeRegistry = require('@routes/RouteRegistry');
+routeRegistry.forEach(route => {
+    app.use(route.path, route.handler);
+});
 
-
-const ErrorHandler = require(`@exceptions/ErrorHandler`);
-app.use(ErrorHandler.badRoute)
-app.use(ErrorHandler.handle);
+const errorRegistry = require(`@exceptions/ErrorRegistry`);
+errorRegistry.forEach(handler => {
+    app.use(handler);
+});
 
 const port = process.env.APP_PORT || 3000;
 app.listen(port, () => {

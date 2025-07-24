@@ -1,8 +1,18 @@
 const RouteException = require(`@exceptions/RouteException`);
 const ErrorResource = require(`@resources/ErrorResource`);
 
-class ErrorHandler {
-    static handle(err, req, res, next) {
+class ErrorRegistry {
+    constructor() {
+        return this.register()
+    }
+    
+    register() {
+        return [
+            this.badRoute,
+            this.handle
+        ]
+    }
+    handle(err, req, res, next) {
         
         const response = new ErrorResource({
             error: {
@@ -14,9 +24,12 @@ class ErrorHandler {
         res.status(err.status || 500).json(response);
     }
 
-    static badRoute(req, res, next) {
+    badRoute(req, res, next) {
         next(RouteException.badRoute());
     }
+
+    
+
 }
 
-module.exports = ErrorHandler; 
+module.exports = new ErrorRegistry; 

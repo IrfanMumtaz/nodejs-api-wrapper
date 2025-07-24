@@ -53,6 +53,7 @@
     "@middlewares": "src/middlewares",
     "@models": "./src/models",
     "@requests": "src/requests",
-    "@resources": "src/resources"
+    "@resources": "src/resources",
+    "@routes": "routes"
   }
 }
