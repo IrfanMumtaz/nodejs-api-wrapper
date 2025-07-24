@@ -10,16 +10,9 @@ require('@cron/CronRegistry');
 const app = express();
 app.use(express.json());
 
-
-const routeRegistry = require('@routes/RouteRegistry');
-routeRegistry.forEach(route => {
-    app.use(route.path, route.handler);
-});
-
-const errorRegistry = require(`@exceptions/ErrorRegistry`);
-errorRegistry.forEach(handler => {
-    app.use(handler);
-});
+const registry = require(`./Registry`);
+registry.routes(app);
+registry.errors(app);
 
 const port = process.env.APP_PORT || 3000;
 app.listen(port, () => {
