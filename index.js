@@ -5,7 +5,8 @@ dotenv.config();
 require('module-alias/register');
 require('@config/db')
 
-require('@cron/CronRegistry');
+// remove comment from CronRegistry to enable cron jobs
+// require('@cron/CronRegistry');
 
 const app = express();
 app.use(express.json());
