@@ -1,4 +1,4 @@
-const rabbitMQ = require('../config/rabbitmq');
+const rabbitMQ = require('../config/Rabbitmq');
 
 class Example{
     constructor() {

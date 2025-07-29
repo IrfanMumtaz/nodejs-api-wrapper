@@ -1,5 +1,6 @@
 const RouteException = require(`@exceptions/RouteException`);
 const ErrorResource = require(`@resources/ErrorResource`);
+const Logger = require("@config/Logger");
 
 class ErrorRegistry {
     constructor() {
@@ -13,7 +14,7 @@ class ErrorRegistry {
         ]
     }
     handle(err, req, res, next) {
-        
+        Logger.error(err.stack);
         const response = new ErrorResource({
             error: {
                 stack: process.env.APP_ENV === 'production' ? "Oops! Something went wrong." : err.stack,
