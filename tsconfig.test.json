@@ -1,0 +1,32 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@config/*": ["config/*"],
+      "@controllers/*": ["src/controllers/*"],
+      "@cron/*": ["cron/*"],
+      "@exceptions/*": ["src/exceptions/*"],
+      "@middlewares/*": ["src/middlewares/*"],
+      "@models/*": ["src/models/*"],
+      "@requests/*": ["src/requests/*"],
+      "@resources/*": ["src/resources/*"],
+      "@routes/*": ["routes/*"],
+      "@services/*": ["src/services/*"],
+      "@container/*": ["src/container/*"]
+    }
+  },
+  "include": [
+    "src/**/*",
+    "config/**/*",
+    "routes/**/*",
+    "cron/**/*",
+    "consumers/**/*",
+    "tests/**/*",
+    "index.ts",
+    "Registry.ts",
+    "jest.config.js",
+    "sutando.config.ts"
+  ],
+  "exclude": ["node_modules", "dist", "coverage", "logs"]
+}

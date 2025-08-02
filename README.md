@@ -2,395 +2,416 @@
 
 A comprehensive Node.js API wrapper with centralized exception handling, middleware management, and structured architecture for building scalable REST APIs.
 
-## Author
+## 🚀 Features
 
-**Irfan Mumtaz** - Full Stack Developer
+- 🏗️ **Structured Architecture**: Clean separation of concerns with controllers, services, models, and resources
+- 🛡️ **Exception Handling**: Centralized error handling with custom exception classes and error registry
+- 🔧 **Middleware Management**: Built-in middleware for logging, validation, sanitization, correlation, and timeout
+- 🧪 **Advanced Testing**: Comprehensive testing setup with Jest, parallel execution, and performance monitoring
+- 📊 **Database Support**: Multiple database support with Sutando ORM (MySQL, PostgreSQL, SQLite)
+- 🔄 **Message Queues**: RabbitMQ integration for background processing
+- ⏰ **Cron Jobs**: Scheduled task management with node-cron
+- 🎯 **TypeScript**: Full TypeScript support with strict type checking and path aliases
+- 🔒 **Security**: Built-in security middleware with Helmet, CORS, rate limiting, and compression
+- 📝 **Logging**: Structured logging with Winston and daily rotation
+- 🏃‍♂️ **Performance**: Parallel test execution, caching, and performance monitoring
+- 🎨 **Code Quality**: ESLint, Prettier, Husky hooks, and conventional commits
 
-- **GitHub**: [@irfan](https://github.com/irfanmumtaz)
-- **LinkedIn**: [Irfan](https://www.linkedin.com/in/imirfanmumtaz)
-- **Email**: im.irfanmumtaz21@gmail.com
+## 📋 Prerequisites
 
-This project is designed to provide a robust foundation for building REST APIs with Node.js and Express.js, featuring centralized exception handling, middleware architecture, and structured code organization.
+- Node.js 18+
+- npm or yarn
+- Git
+- Database (MySQL, PostgreSQL, or SQLite)
+- RabbitMQ (optional, for message queues)
 
-## Features
+## 🛠️ Quick Start
 
-- **Centralized Exception Handling**: Global error handling with standardized response format
-- **Middleware Architecture**: Modular middleware system for request processing
-- **Structured Architecture**: Organized folder structure with controllers, services, models, and business logic
-- **Environment Configuration**: Environment variable management with dotenv
-- **Express.js Framework**: Built on Express.js for robust API development
-- **Sutando ORM**: Database integration with Sutando ORM for efficient data management
+### Installation
 
-## Project Structure
-
-```
-├── src/
-│   ├── controller/          # Controller classes
-│   ├── model/               # Data models
-│   ├── exceptions/          # Custom exception classes
-│   ├── requests/            # Request validation
-│   └── resources/           # Response formatting
-├── routes/                  # API route definitions
-├── index.js                 # Application entry point
-├── package.json             # Dependencies and scripts
-└── .env                     # Environment variables
-```
-
-## Installation
-
-1. Clone the repository:
 ```bash
-git clone git@github.com:IrfanMumtaz/nodejs-api-wrapper.git
+# Clone the repository
+git clone https://github.com/irfan/nodejs-api-wrapper.git
 cd nodejs-api-wrapper
-```
 
-2. Install dependencies:
-```bash
+# Install dependencies
 npm install
-```
 
-3. Create environment file:
-```bash
+# Set up environment variables
 cp .env.example .env
-# Edit .env with your configuration
-```
 
-4. Start the server:
-```bash
-npm start
-```
+# Build the project
+npm run build
 
-## Architecture Overview
-
-### Controllers
-Controllers handle HTTP requests and responses. They extend the base `Controller` class and contain route-specific logic.
-
-```javascript
-const Controller = require('@controllers/Controller');
-
-class HomeController extends Controller {
-  getSampleResponse(req, res) {
-    // Handle request logic
-  }
-}
-```
-
-### Models
-Models represent data structures and database entities. They define the structure of your application's data.
-
-```javascript
-const { Model } = require('sutando');
-
-class User extends Model {
-}
-
-module.exports = User
-```
-
-## Exception Handling
-
-The wrapper implements centralized exception handling with a standardized response format:
-
-```javascript
-{
-  "data": {},
-  "error": {},
-  "success": false,
-  "message": "Error message"
-}
-```
-
-### Custom Exceptions
-Create custom exceptions by extending the base Error class:
-
-```javascript
-const BaseException = require(`@exceptions/BaseException`);
-
-class RouteException extends BaseException {
-
-    constructor(message = 'Route Exception', code = 400) {
-        super(message, code, 400);
-    }
-
-    static badRoute(msg = null) {
-        return new RouteException(msg || "Bad request, route does not exist")
-    }
-}
-
-module.exports = RouteException; 
-```
-
-### Request Validation
-Create custom request validation class in requests folder using joi:
-
-```javascript
-const Joi = require('joi');
-
-const UserRequest = Joi.object({
-    name: Joi.string().alphanum().min(3).max(30).required(),
-});
-
-module.exports = UserRequest
-```
-
-
-### Resource Structuring
-Create custom Resource class for the structuring the response data in a unified way:
-
-```javascript
-const BaseResource = require(`@resources/BaseResource`);
-
-class HomeResource extends BaseResource{
-
-    
-    static setData(data) {
-        return {
-            "id": data.id,
-            "name": data.name,
-        }
-    }
-}
-
-module.exports = HomeResource
-```
-
-## API Routes
-
-Routes are defined in the `routes/` directory and follow RESTful conventions:
-
-```javascript
-const express = require('express');
-const router = express.Router();
-
-router.get('/sample', (req, res) => {
-  // Route handler
-});
-
-module.exports = router;
-```
-
-## Middleware
-
-The wrapper supports custom middleware for request processing, authentication, validation, and more.
-
-### Global Middleware
-Middleware can be applied globally in `index.js`:
-
-```javascript
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-```
-
-### Route-specific Middleware
-Apply middleware to specific routes:
-
-```javascript
-router.use('/protected', authMiddleware);
-```
-
-## Database Integration
-
-### Sutando ORM Setup
-The wrapper uses Sutando ORM for database operations. Configure your database connection in the `.env` file:
-
-```env
-DB_CONNECTION=mysql
-DB_HOST=localhost
-DB_USER=your_username
-DB_PASSWORD=your_password
-DB_DATABASE=your_database
-DB_PORT=3306
-```
-
-### Database Configuration
-Sutando ORM requires the following environment variables:
-
-- `DB_CONNECTION`: Database driver (mysql2, pg, sqlite3)
-- `DB_HOST`: Database host address
-- `DB_USER`: Database username
-- `DB_PASSWORD`: Database password
-- `DB_DATABASE`: Database name
-- `DB_PORT`: Database port number
-
-### Migrations
-Database migrations help manage schema changes. Sutando provides a powerful migration system for version control of your database schema.
-
-#### Migration Commands
-```bash
-# Generate a new migration
-npx sutando migrate:make create_users_table
-
-# Run all pending migrations
-npx sutando migrate:run
-
-# Check migration status
-npx sutando migrate:status
-
-# Rollback the last batch of migrations
-npx sutando migrate:rollback
-
-# Rollback a specific number of migrations
-npx sutando migrate:rollback --step=5
-```
-
-#### Migration Structure
-Each migration file contains `up` and `down` methods:
-
-```javascript
-const { Migration } = require('sutando');
-
-module.exports = class extends Migration {
-  async up(schema) {
-    await schema.createTable('users', (table) => {
-      table.increments('id');
-      table.string('name');
-      table.string('email').unique();
-      table.timestamps();
-    });
-  }
-
-  async down(schema) {
-    await schema.dropTableIfExists('users');
-  }
-};
-```
-
-For more detailed information about migrations, visit the [Sutando Migrations Guide](https://sutando.org/guide/migrations.html).
-
-## Environment Configuration
-
-Environment variables are managed through the `.env` file:
-
-```env
-PORT=3000
-NODE_ENV=development
-
-# Database Configuration (Sutando ORM)
-DB_CONNECTION=mysql
-DB_HOST=localhost
-DB_USER=your_username
-DB_PASSWORD=your_password
-DB_DATABASE=your_database
-DB_PORT=3306
-```
-
-## API Documentation
-
-### Standard Response Format
-All API responses follow a consistent format:
-
-**Success Response:**
-```json
-{
-  "data": {},
-  "error": {},
-  "success": true,
-  "message": "Operation successful"
-}
-```
-
-**Error Response:**
-```json
-{
-  "data": {},
-  "error": {
-    "name": "ErrorName",
-    "stack": "Error stack trace"
-  },
-  "success": false,
-  "message": "Error message"
-}
-```
-
-## Getting Started
-
-1. **Create a new controller:**
-```javascript
-// src/controller/UserController.js
-const Controller = require('@controllers/Controller');
-
-class UserController extends Controller {
-  async getUsers(req, res) {
-    // Implementation
-  }
-}
-```
-
-2. **Add routes:**
-```javascript
-// routes/api.js
-const UserController = require('@controller/UserController');
-const userController = new UserController();
-
-router.get('/users', (req, res) => userController.getUsers(req, res));
-```
-
-3. **Create custom exceptions:**
-```javascript
-// src/exceptions/ValidationException.js
-class ValidationException extends Error {
-  constructor(message) {
-    super(message);
-    this.name = 'ValidationException';
-    this.status = 400;
-  }
-}
-```
-
-## Development
-
-### Running in Development
-```bash
+# Start development server
 npm run dev
 ```
 
-### Running in Production
+### Environment Configuration
+
+Create a `.env` file in the root directory by copying the example:
+
 ```bash
-npm run start
+cp .env.example .env
 ```
 
+Then edit the `.env` file with your configuration:
 
-## Dependencies
+```env
+# Application Configuration
+NODE_ENV=development
+APP_PORT=3000
+APP_ENV=development
 
-- **Express.js**: Web framework
-- **dotenv**: Environment variable management
-- **Sutando ORM**: Database ORM for efficient data management
-- **Additional packages**: Add as needed for your specific use case
+# Database Configuration
+DB_CONNECTION=mysql
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=
+DB_DATABASE=test
+PGSSL=false
 
-## Contributing
+# Security Configuration
+JWT_SECRET=your-super-secret-jwt-key-at-least-32-characters-long
+JWT_EXPIRES_IN=24h
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+# Logging Configuration
+LOG_LEVEL=info
+LOG_FILE=logs/app.log
 
-## License
+# Rate Limiting
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX_REQUESTS=100
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+# Compression
+COMPRESSION_LEVEL=6
+COMPRESSION_THRESHOLD=1024
 
-### Why MIT License?
+# CORS
+CORS_ORIGIN=*
 
-The MIT License is one of the most popular open-source licenses because it:
+# Request Timeout
+REQUEST_TIMEOUT=30000
 
-- **Permissive**: Allows commercial use, modification, distribution, and private use
-- **Simple**: Easy to understand and implement
-- **Compatible**: Works well with other licenses
-- **Developer-friendly**: Minimal restrictions while providing liability protection
-- **Widely accepted**: Used by major projects like React, Vue.js, and Node.js
+# Database Pooling
+DB_POOL_MIN=2
+DB_POOL_MAX=10
+DB_POOL_ACQUIRE_TIMEOUT=30000
+DB_POOL_CREATE_TIMEOUT=30000
+DB_POOL_DESTROY_TIMEOUT=5000
+DB_POOL_IDLE_TIMEOUT=30000
+DB_POOL_REAP_INTERVAL=1000
+DB_POOL_CREATE_RETRY_INTERVAL=200
 
-### License Summary
+# RabbitMQ Configuration (optional)
+RABBITMQ_URL=amqp://localhost
+```
 
-- ✅ **Commercial use**: Allowed
-- ✅ **Modification**: Allowed  
-- ✅ **Distribution**: Allowed
-- ✅ **Private use**: Allowed
-- ✅ **Patent use**: Allowed
-- ❌ **Liability**: Limited
-- ❌ **Warranty**: None
+## 🏗️ Project Structure
 
-For more information about the MIT License, visit [choosealicense.com](https://choosealicense.com/licenses/mit/).
+```
+├── config/                 # Configuration files
+│   ├── ConfigValidator.ts  # Environment validation
+│   ├── db.ts              # Database configuration
+│   ├── Logger.ts          # Logging configuration
+│   ├── Rabbitmq.ts        # RabbitMQ configuration
+│   └── Security.ts        # Security middleware setup
+├── consumers/             # Message queue consumers
+│   ├── example.ts         # Example consumer
+│   └── index.ts           # Consumer registry
+├── cron/                  # Scheduled tasks
+│   ├── CronRegistry.ts    # Cron job registry
+│   └── SampleCron.ts      # Example cron job
+├── migrations/            # Database migrations
+│   └── 2025_07_22_112747_create_users_table.ts
+├── routes/                # Route definitions
+│   ├── api.ts             # API routes
+│   ├── RouteRegistry.ts   # Route registry
+│   └── web.ts             # Web routes
+├── src/
+│   ├── container/         # Dependency injection
+│   │   ├── Container.ts   # DI container
+│   │   └── ServiceRegistry.ts
+│   ├── controllers/       # Request handlers
+│   │   ├── Controller.ts  # Base controller
+│   │   ├── HealthController.ts
+│   │   └── HomeController.ts
+│   ├── exceptions/        # Custom exception classes
+│   │   ├── BaseException.ts
+│   │   ├── ErrorRegistry.ts
+│   │   ├── ResponseException.ts
+│   │   ├── RouteException.ts
+│   │   ├── SampleException.ts
+│   │   └── ValidationException.ts
+│   ├── middlewares/       # Express middlewares
+│   │   ├── CorrelationMiddleware.ts
+│   │   ├── LoggingMiddleware.ts
+│   │   ├── SanitizationMiddleware.ts
+│   │   ├── TimeoutMiddleware.ts
+│   │   └── ValidationMiddleware.ts
+│   ├── models/            # Database models
+│   │   └── User.ts
+│   ├── requests/          # Request validation schemas
+│   │   └── UserRequest.ts
+│   ├── resources/         # Response transformers
+│   │   ├── BaseResource.ts
+│   │   ├── ErrorResource.ts
+│   │   ├── HomeResource.ts
+│   │   └── SuccessResource.ts
+│   ├── services/          # Business logic
+│   │   ├── BaseService.ts
+│   │   └── UserService.ts
+│   └── types/             # TypeScript type definitions
+├── tests/                 # Test files
+│   ├── controllers/       # Controller tests
+│   ├── utils/             # Test utilities
+│   ├── globalSetup.ts     # Global test setup
+│   ├── globalTeardown.ts  # Global test teardown
+│   ├── setup.ts           # Test setup
+│   └── testSequencer.ts   # Custom test sequencer
+├── index.ts              # Application entry point
+├── Registry.ts           # Application registry
+└── sutando.config.ts     # ORM configuration
+```
 
-## Support
+## 📜 Available Scripts
 
-For questions and support, please open an issue in the GitHub repository.
+### Development
+
+```bash
+# Start development server with hot reload
+npm run dev
+
+# Build the project
+npm run build
+
+# Clean build directory and rebuild
+npm run build:clean
+
+# Type checking
+npm run type-check
+```
+
+### Testing
+
+```bash
+# Run tests
+npm run test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests in parallel (optimized)
+npm run test:parallel
+
+# Run fast parallel tests (skip integration/e2e)
+npm run test:parallel:fast
+
+# Run full parallel tests
+npm run test:parallel:full
+
+# Run tests with coverage
+npm run test:coverage
+
+# Run tests with coverage in watch mode
+npm run test:coverage:watch
+
+# Run tests with coverage for CI
+npm run test:coverage:ci
+
+# Generate HTML coverage report
+npm run test:coverage:html
+
+# Generate JSON coverage report
+npm run test:coverage:json
+
+# Run tests with coverage thresholds
+npm run test:coverage:threshold
+
+# Open coverage report in browser
+npm run test:coverage:open
+```
+
+### Code Quality
+
+```bash
+# Run ESLint
+npm run lint
+
+# Fix ESLint issues
+npm run lint:fix
+
+# Run lint-staged (for pre-commit)
+npm run lint:staged
+
+# Format code with Prettier
+npm run format
+
+# Check code formatting
+npm run format:check
+
+# Run all quality checks
+npm run quality
+
+# Fix all quality issues
+npm run quality:fix
+```
+
+### Production
+
+```bash
+# Start production server
+npm start
+
+# Start RabbitMQ consumers
+npm run rabbitmq
+```
+
+## 🧪 Testing Features
+
+### Parallel Test Execution
+
+The project includes advanced parallel testing capabilities:
+
+- **Custom Test Sequencer**: Optimizes test execution order
+- **Performance Monitoring**: Tracks test execution times
+- **Test Isolation**: Ensures tests don't interfere with each other
+- **Global Setup/Teardown**: Manages test environment lifecycle
+- **Parallel Utilities**: Helper functions for parallel test execution
+
+### Test Types
+
+- **Unit Tests**: Fast, isolated component tests
+- **Controller Tests**: API endpoint testing
+- **Service Tests**: Business logic testing
+- **Integration Tests**: Database and external service testing
+- **E2E Tests**: Full application flow testing
+
+## 🔧 Development Tools
+
+### IDE Configuration
+
+This project includes comprehensive IDE configurations for VS Code:
+
+#### Required Extensions
+
+- TypeScript and JavaScript Language Features
+- ESLint
+- Prettier - Code formatter
+- Jest Runner
+- Path Intellisense
+- Auto Rename Tag
+
+#### Features
+
+- **Auto-formatting**: Code is automatically formatted on save
+- **Linting**: ESLint runs on save to catch errors and enforce code style
+- **Debugging**: Pre-configured debug configurations for application and tests
+- **Tasks**: Built-in tasks for common operations (build, test, lint)
+- **Git Integration**: Husky hooks for pre-commit checks
+
+### Git Hooks
+
+The project uses Husky for Git hooks:
+
+- **Pre-commit**: Runs type checking, linting, and tests
+- **Commit-msg**: Validates commit message format (conventional commits)
+
+### Conventional Commits
+
+This project follows the [Conventional Commits](https://www.conventionalcommits.org/) specification:
+
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+Types:
+
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation changes
+- `style`: Code style changes
+- `refactor`: Code refactoring
+- `perf`: Performance improvements
+- `test`: Test changes
+- `build`: Build system changes
+- `ci`: CI/CD changes
+- `chore`: Maintenance tasks
+- `revert`: Revert previous commit
+
+## 🔒 Security Features
+
+- **Helmet**: Security headers
+- **CORS**: Cross-origin resource sharing
+- **Rate Limiting**: Request rate limiting
+- **Compression**: Response compression
+- **Request Sanitization**: Input sanitization
+- **Timeout Protection**: Request timeout middleware
+- **Correlation IDs**: Request tracing
+
+## 📊 Database Support
+
+The project supports multiple databases through Sutando ORM:
+
+- **MySQL**: Primary database support
+- **PostgreSQL**: Full PostgreSQL support with SSL
+- **SQLite**: Lightweight database option
+
+### Migration Commands
+
+```bash
+# Run migrations
+npx sutando migrate
+
+# Rollback migrations
+npx sutando migrate:rollback
+
+# Create new migration
+npx sutando make:migration create_table_name
+```
+
+## 🔄 Message Queue Integration
+
+RabbitMQ integration for background processing:
+
+```bash
+# Start message queue consumers
+npm run rabbitmq
+```
+
+## ⏰ Cron Jobs
+
+Scheduled task management with node-cron:
+
+```typescript
+// Enable cron jobs in index.ts
+import '@cron/CronRegistry';
+```
+
+## 🤝 Contributing
+
+Please read our [Contributing Guide](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👨‍💻 Author
+
+**Irfan Mumtaz**
+
+- Email: im.irfanmumtaz21@gmail.com
+- GitHub: [@irfanmumtaz](https://github.com/irfanmumtaz)
+
+## 🙏 Acknowledgments
+
+- [Express.js](https://expressjs.com/) - Web framework
+- [Sutando](https://sutando.org/) - ORM
+- [Jest](https://jestjs.io/) - Testing framework
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [Husky](https://typicode.github.io/husky/) - Git hooks
