@@ -1,28 +1,46 @@
 # Contributing Guide
 
-## Development Setup
+Thank you for your interest in contributing to the Node.js API Wrapper! This guide will help you get started with development and understand our contribution process.
+
+## 🚀 Development Setup
 
 ### Prerequisites
 
 - Node.js 18+
 - npm or yarn
 - Git
+- Database (MySQL, PostgreSQL, or SQLite)
+- RabbitMQ (optional, for message queue features)
 
 ### Initial Setup
 
-1. **Install dependencies:**
+1. **Fork and clone the repository:**
+
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/nodejs-api-wrapper.git
+   cd nodejs-api-wrapper
+   ```
+
+2. **Install dependencies:**
 
    ```bash
    npm install
    ```
 
-2. **Install Git hooks (automatically done by npm install):**
+3. **Set up environment variables:**
+
+   ```bash
+   cp .env.example .env
+   # Edit .env with your configuration
+   ```
+
+4. **Install Git hooks (automatically done by npm install):**
 
    ```bash
    npm run prepare
    ```
 
-3. **Verify Husky hooks are installed:**
+5. **Verify Husky hooks are installed:**
 
    ```bash
    ls -la .git/hooks/
@@ -30,7 +48,188 @@
 
    You should see `pre-commit` and `commit-msg` files.
 
-## Git Hooks
+6. **Build the project:**
+
+   ```bash
+   npm run build
+   ```
+
+## 🔧 Development Workflow
+
+### 1. Create a Feature Branch
+
+```bash
+git checkout -b feature/your-feature-name
+# or
+git checkout -b fix/your-bug-fix
+# or
+git checkout -b docs/your-documentation-update
+```
+
+### 2. Make Your Changes
+
+Follow the project's architecture patterns:
+
+- **Controllers**: Handle HTTP requests and responses
+- **Services**: Implement business logic
+- **Models**: Define database models
+- **Resources**: Transform data for API responses
+- **Requests**: Validate incoming data
+- **Exceptions**: Handle errors consistently
+- **Middlewares**: Add request processing logic
+
+### 3. Run Quality Checks
+
+```bash
+# Run all quality checks
+npm run quality
+
+# Fix quality issues automatically
+npm run quality:fix
+```
+
+### 4. Test Your Changes
+
+```bash
+# Run all tests
+npm run test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests in parallel (recommended)
+npm run test:parallel
+
+# Run tests with coverage
+npm run test:coverage
+```
+
+### 5. Commit Your Changes
+
+```bash
+git add .
+git commit -m "feat: add new feature description"
+```
+
+### 6. Push and Create Pull Request
+
+```bash
+git push origin feature/your-feature-name
+```
+
+Then create a Pull Request on GitHub.
+
+## 🧪 Testing Guidelines
+
+### Test Structure
+
+The project uses Jest with advanced parallel testing capabilities:
+
+```
+tests/
+├── controllers/          # Controller tests
+├── services/            # Service tests
+├── middlewares/         # Middleware tests
+├── utils/               # Test utilities
+├── setup.ts             # Test setup
+├── globalSetup.ts       # Global test setup
+├── globalTeardown.ts    # Global test teardown
+└── testSequencer.ts     # Custom test sequencer
+```
+
+### Writing Tests
+
+1. **Test File Naming**: Use `.test.ts` or `.spec.ts` suffix
+2. **Test Organization**: Group related tests using `describe` blocks
+3. **Test Isolation**: Each test should be independent
+4. **Performance**: Use parallel test utilities for better performance
+
+### Example Test
+
+```typescript
+import { ParallelTestUtils } from '../utils/parallelTestUtils';
+
+describe('UserService', () => {
+  let testId: string;
+
+  beforeEach(() => {
+    testId = ParallelTestUtils.generateTestId('user-service');
+    ParallelTestUtils.startTestTimer(testId);
+  });
+
+  afterEach(() => {
+    const executionTime = ParallelTestUtils.endTestTimer(testId);
+    ParallelTestUtils.cleanupTestDataDir(testId);
+  });
+
+  it('should create a new user', async () => {
+    // Test implementation
+  });
+});
+```
+
+### Test Commands
+
+```bash
+# Run specific test file
+npm test -- tests/controllers/HomeController.test.ts
+
+# Run tests matching pattern
+npm test -- --testNamePattern="user"
+
+# Run tests with verbose output
+npm test -- --verbose
+
+# Run tests with coverage for specific file
+npm run test:coverage -- tests/controllers/HomeController.test.ts
+```
+
+## 📝 Code Quality Standards
+
+### Linting and Formatting
+
+The project uses ESLint and Prettier for code quality:
+
+```bash
+# Run linting
+npm run lint
+
+# Fix linting issues
+npm run lint:fix
+
+# Format code
+npm run format
+
+# Check formatting
+npm run format:check
+```
+
+### TypeScript
+
+Strict TypeScript configuration is enforced:
+
+```bash
+# Type checking
+npm run type-check
+
+# Build with type checking
+npm run build
+```
+
+### Quality Commands
+
+```bash
+# Run all quality checks
+npm run quality
+
+# Fix all quality issues
+npm run quality:fix
+
+# Run lint-staged (for pre-commit)
+npm run lint:staged
+```
+
+## 🔒 Git Hooks
 
 This project uses Husky to manage Git hooks for code quality and commit message validation.
 
@@ -83,6 +282,10 @@ docs: update API documentation
 style: format code with prettier
 refactor(api): improve error handling
 test: add unit tests for user service
+perf: optimize database queries
+build: update dependencies
+ci: add GitHub Actions workflow
+chore: update README
 ```
 
 ❌ **Invalid commit messages:**
@@ -93,86 +296,72 @@ fixed bug
 update docs
 ```
 
-## Code Quality
+## 🏗️ Project Architecture
 
-### Linting and Formatting
+### Directory Structure
 
-- **ESLint**: Code linting with TypeScript support
-- **Prettier**: Code formatting
-- **TypeScript**: Type checking
+Follow the established project structure:
 
-### Quality Commands
-
-```bash
-# Run all quality checks
-npm run quality
-
-# Fix all quality issues
-npm run quality:fix
-
-# Run linting only
-npm run lint
-
-# Fix linting issues
-npm run lint:fix
-
-# Format code
-npm run format
-
-# Check formatting
-npm run format:check
-
-# Type checking
-npm run type-check
+```
+src/
+├── controllers/       # HTTP request handlers
+├── services/         # Business logic
+├── models/           # Database models
+├── resources/        # API response transformers
+├── requests/         # Request validation schemas
+├── exceptions/       # Custom exception classes
+├── middlewares/      # Express middlewares
+├── container/        # Dependency injection
+└── types/           # TypeScript type definitions
 ```
 
-### Pre-commit Quality Checks
+### Coding Patterns
 
-The pre-commit hook automatically runs:
+1. **Controllers**: Handle HTTP requests, delegate to services
+2. **Services**: Implement business logic, interact with models
+3. **Models**: Define database structure and relationships
+4. **Resources**: Transform data for API responses
+5. **Requests**: Validate and sanitize incoming data
+6. **Exceptions**: Provide consistent error handling
+7. **Middlewares**: Add cross-cutting concerns
 
-1. TypeScript type checking
-2. ESLint linting
-3. Jest tests
+### Example Implementation
 
-If any check fails, the commit is aborted and you must fix the issues before committing.
+```typescript
+// Controller
+export class UserController extends Controller {
+  constructor(private userService: UserService) {
+    super();
+  }
 
-## Development Workflow
+  async create(req: Request, res: Response): Promise<void> {
+    const userData = await UserRequest.validate(req.body);
+    const user = await this.userService.create(userData);
+    res.json(new UserResource(user));
+  }
+}
 
-1. **Create a feature branch:**
+// Service
+export class UserService extends BaseService {
+  async create(data: CreateUserData): Promise<User> {
+    // Business logic implementation
+  }
+}
 
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
+// Resource
+export class UserResource extends BaseResource {
+  constructor(user: User) {
+    super({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      created_at: user.created_at,
+    });
+  }
+}
+```
 
-2. **Make your changes**
-
-3. **Run quality checks:**
-
-   ```bash
-   npm run quality
-   ```
-
-4. **Stage your changes:**
-
-   ```bash
-   git add .
-   ```
-
-5. **Commit with conventional commit format:**
-
-   ```bash
-   git commit -m "feat: add new feature"
-   ```
-
-6. **Push your changes:**
-
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-
-7. **Create a Pull Request**
-
-## Troubleshooting
+## 🔧 Troubleshooting
 
 ### Git Hooks Not Working
 
@@ -225,14 +414,86 @@ If quality checks fail:
    npm run quality
    ```
 
-## IDE Configuration
+### Test Failures
 
-This project includes VS Code configurations for optimal development experience:
+If tests are failing:
 
-- **Auto-formatting** on save
-- **ESLint integration** with auto-fix
-- **TypeScript support** with path resolution
-- **Debug configurations** for application and tests
-- **Built-in tasks** for common operations
+1. **Check test environment:**
+   ```bash
+   npm run test:coverage
+   ```
 
-Make sure to install the recommended VS Code extensions when prompted.
+2. **Run tests in isolation:**
+   ```bash
+   npm test -- --testNamePattern="specific test name"
+   ```
+
+3. **Check for test data conflicts:**
+   ```bash
+   npm run test:parallel:fast
+   ```
+
+## 🎯 Pull Request Guidelines
+
+### Before Submitting
+
+1. **Ensure all tests pass:**
+   ```bash
+   npm run test:parallel
+   ```
+
+2. **Run quality checks:**
+   ```bash
+   npm run quality
+   ```
+
+3. **Update documentation** if needed
+
+4. **Add tests** for new features
+
+### Pull Request Template
+
+Use this template for your pull requests:
+
+```markdown
+## Description
+Brief description of changes
+
+## Type of Change
+- [ ] Bug fix
+- [ ] New feature
+- [ ] Documentation update
+- [ ] Code refactoring
+- [ ] Performance improvement
+- [ ] Test addition/update
+
+## Testing
+- [ ] All tests pass
+- [ ] New tests added for new functionality
+- [ ] Manual testing completed
+
+## Checklist
+- [ ] Code follows project style guidelines
+- [ ] Self-review completed
+- [ ] Documentation updated
+- [ ] No console.log statements left
+- [ ] No TODO comments left
+```
+
+## 📚 Additional Resources
+
+- [Conventional Commits](https://www.conventionalcommits.org/)
+- [Jest Testing Framework](https://jestjs.io/)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [Express.js Guide](https://expressjs.com/en/guide/routing.html)
+
+## 🤝 Getting Help
+
+If you need help with development:
+
+1. **Check existing issues** on GitHub
+2. **Search documentation** in the README
+3. **Create an issue** for bugs or feature requests
+4. **Join discussions** in pull requests
+
+Thank you for contributing to the Node.js API Wrapper! 🎉
