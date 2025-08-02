@@ -18,7 +18,7 @@
     "test:coverage:html": "jest --config jest.config.js --coverage --coverageReporters=html",
     "test:coverage:json": "jest --config jest.config.js --coverage --coverageReporters=json",
     "test:coverage:threshold": "jest --config jest.config.js --coverage --coverageThreshold.global.lines=50 --coverageThreshold.global.functions=50",
-    "test:coverage:open": "open coverage/lcov-report/index.html || start coverage/lcov-report/index.html || xdg-open coverage/lcov-report/index.html",
+    "test:coverage:open": "start coverage/lcov-report/index.html || open coverage/lcov-report/index.html || xdg-open coverage/lcov-report/index.html",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "lint:staged": "lint-staged",
