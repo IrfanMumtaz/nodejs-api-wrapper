@@ -1,9 +1,14 @@
-import request from 'supertest';
-import express from 'express';
 import HomeController from '@controllers/HomeController';
-import User from '@models/User';
 import UserService from '@services/UserService';
-import { MockRequest, MockResponse } from '../../src/types';
+import express from 'express';
+import { ExpressRequest } from '../../src/types';
+
+// Define mock types for testing
+interface MockRequest extends Partial<ExpressRequest> {}
+interface MockResponse {
+  status: jest.Mock;
+  json: jest.Mock;
+}
 
 // Mock the User model and UserService
 jest.mock('@models/User');
