@@ -39,7 +39,9 @@ try {
 } catch (error) {
   Logger.error(`❌ Database connection failed: ${(error as Error).message}`);
   // Don't throw error here, let the application start and handle connection issues gracefully
-  Logger.warn('⚠️ Database connection failed, but application will continue to start');
+  Logger.warn(
+    '⚠️ Database connection failed, but application will continue to start'
+  );
 }
 
 // Graceful shutdown handling

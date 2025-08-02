@@ -11,7 +11,7 @@ class ErrorRegistry {
       res: ExpressResponse,
       next: ExpressNextFunction
     ) => void
-    > {
+  > {
     return [this.badRoute, this.handle];
   }
 
@@ -41,12 +41,14 @@ class ErrorRegistry {
           process.env.APP_ENV === 'production'
             ? 'Oops! Something went wrong.'
             : err.stack,
-        code: (err as any).code || 500,
+        code: (err as unknown as Record<string, unknown>).code || 500,
         correlationId,
       },
       message: err.message || 'Internal Server Error',
     });
-    res.status((err as any).status || 500).json(response as any);
+    res
+      .status(Number((err as unknown as Record<string, unknown>).status) || 500)
+      .json(response as unknown as Record<string, unknown>);
   }
 
   static badRoute(

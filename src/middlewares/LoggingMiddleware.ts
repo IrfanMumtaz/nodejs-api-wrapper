@@ -1,5 +1,5 @@
-import { ExpressRequest, ExpressResponse, ExpressNextFunction } from '../types';
 import Logger from '@config/Logger';
+import { ExpressNextFunction, ExpressRequest, ExpressResponse } from '../types';
 
 export const requestLoggingMiddleware = (
   req: ExpressRequest,
@@ -16,7 +16,10 @@ export const requestLoggingMiddleware = (
 
   // Override res.end to log response
   const originalEnd = res.end;
-  (res as any).end = function (chunk?: string | Buffer, encoding?: BufferEncoding): any {
+  (res as unknown as Record<string, unknown>).end = function (
+    chunk?: string | Buffer,
+    encoding?: BufferEncoding
+  ): ExpressResponse {
     const duration = Date.now() - (req.startTime || 0);
 
     Logger.info(

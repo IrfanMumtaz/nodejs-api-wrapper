@@ -1,8 +1,9 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 export interface ExpressRequest extends Request {
   body: Record<string, unknown>;
   params: Record<string, string>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   query: any;
   correlationId?: string;
   startTime?: number;

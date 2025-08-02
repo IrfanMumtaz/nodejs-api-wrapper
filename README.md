@@ -47,6 +47,7 @@ This project includes comprehensive IDE configurations for VS Code:
 #### Required Extensions
 
 Install the recommended extensions for VS Code:
+
 - TypeScript and JavaScript Language Features
 - ESLint
 - Prettier - Code formatter
@@ -65,6 +66,7 @@ Install the recommended extensions for VS Code:
 #### VS Code Settings
 
 The workspace includes optimized settings for:
+
 - TypeScript auto-imports and path resolution
 - Editor formatting and code actions
 - File exclusions and search patterns
@@ -125,6 +127,7 @@ This project follows the [Conventional Commits](https://www.conventionalcommits.
 ```
 
 Types:
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation changes
@@ -161,17 +164,20 @@ Types:
 ## Available Scripts
 
 ### Development
+
 - `npm run dev` - Start development server with hot reload
 - `npm run build` - Build the project
 - `npm run build:clean` - Clean build directory and rebuild
 
 ### Testing
+
 - `npm run test` - Run tests
 - `npm run test:watch` - Run tests in watch mode
 - `npm run test:coverage` - Run tests with coverage
 - `npm run test:parallel` - Run tests in parallel
 
 ### Code Quality
+
 - `npm run lint` - Run ESLint
 - `npm run lint:fix` - Fix ESLint issues
 - `npm run format` - Format code with Prettier
@@ -218,5 +224,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Author
 
 **Irfan Mumtaz**
+
 - Email: im.irfanmumtaz21@gmail.com
 - GitHub: [@irfanmumtaz](https://github.com/irfanmumtaz)

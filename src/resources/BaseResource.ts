@@ -1,6 +1,6 @@
 import ResponseException from '@exceptions/ResponseException';
 import { Collection } from 'sutando';
-import { ResourceData, ResourceCollection } from '../types';
+import { ResourceCollection, ResourceData } from '../types';
 
 class BaseResource {
   constructor(data: unknown) {
@@ -18,23 +18,32 @@ class BaseResource {
   }
 
   private dataArray(data: unknown[]): ResourceCollection | ResourceData[] {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if ((this.constructor as any).wrap) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (this as any)[(this.constructor as any).wrap] = data.map(item =>
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (this.constructor as any).setData(item)
       );
       return this as unknown as ResourceCollection;
     } else {
-      return data.map(item => (this.constructor as any).setData(item)) as ResourceData[];
+      return data.map(item =>
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (this.constructor as any).setData(item)
+      ) as ResourceData[];
     }
   }
 
   private dataObject(data: unknown): ResourceData | void {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if ((this.constructor as any).wrap) {
-      (this as any)[(this.constructor as any).wrap] = (
-        this.constructor as any
-      ).setData(data);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (this as any)[(this.constructor as any).wrap] =
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (this.constructor as any).setData(data);
       return this as unknown as ResourceData;
     } else {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return (this.constructor as any).setData(data) as ResourceData;
     }
   }

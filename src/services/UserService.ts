@@ -1,7 +1,7 @@
-import BaseService from './BaseService';
 import User from '@models/User';
 import UserRequest from '@requests/UserRequest';
 import { UserModel } from '../types';
+import BaseService from './BaseService';
 
 class UserService extends BaseService {
   async getAllUsers(): Promise<UserModel[]> {
@@ -14,7 +14,11 @@ class UserService extends BaseService {
   async createUser(userData: Partial<UserModel>): Promise<UserModel> {
     return this.execute(async () => {
       // Validate input data
-      const validatedData = this.validateData<UserModel>(userData, UserRequest as any);
+      const validatedData = this.validateData<UserModel>(
+        userData,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        UserRequest as any
+      );
 
       // Check if user already exists
       const existingUser = await User.query()
@@ -49,7 +53,11 @@ class UserService extends BaseService {
     userData: Partial<UserModel>
   ): Promise<UserModel> {
     return this.execute(async () => {
-      const validatedData = this.validateData<UserModel>(userData, UserRequest as any);
+      const validatedData = this.validateData<UserModel>(
+        userData,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        UserRequest as any
+      );
 
       const user = await User.query().findById(id);
 

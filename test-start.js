@@ -9,7 +9,7 @@ dotenv.config({ path: path.join(__dirname, 'env.example') });
 jest.mock('sutando', () => ({
   sutando: {
     addConnection: jest.fn(),
-    raw: jest.fn().mockResolvedValue([{ '1': 1 }]),
+    raw: jest.fn().mockResolvedValue([{ 1: 1 }]),
   },
 }));
 
@@ -20,4 +20,4 @@ try {
 } catch (error) {
   console.error('❌ Application import failed:', error.message);
   process.exit(1);
-} 
+}

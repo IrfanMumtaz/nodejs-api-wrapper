@@ -1,11 +1,14 @@
-import Controller from './Controller';
+import ServiceRegistry from '@container/ServiceRegistry';
 import SampleException from '@exceptions/SampleException';
 import HomeResource from '@resources/HomeResource';
-import ServiceRegistry from '@container/ServiceRegistry';
 import { ExpressRequest, ExpressResponse } from '../types';
+import Controller from './Controller';
 
 class HomeController extends Controller {
-  private userService: any;
+  private userService: {
+    getAllUsers: () => Promise<unknown>;
+    createUser: (data: unknown) => Promise<unknown>;
+  };
 
   constructor() {
     super();
@@ -21,7 +24,10 @@ class HomeController extends Controller {
       res,
       async (_req: ExpressRequest, res: ExpressResponse) => {
         const users = await this.userService.getAllUsers();
-        return this.response(res, new HomeResource(users) as any);
+        return this.response(
+          res,
+          new HomeResource(users) as unknown as Record<string, unknown>
+        );
       }
     );
   }
@@ -37,7 +43,7 @@ class HomeController extends Controller {
         const user = await this.userService.createUser(req.body);
         return this.response(
           res,
-          new HomeResource(user) as any,
+          new HomeResource(user) as unknown as Record<string, unknown>,
           201,
           'User created successfully'
         );

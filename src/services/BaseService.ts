@@ -23,7 +23,9 @@ class BaseService {
   validateData<T>(data: Record<string, unknown>, schema: ValidationSchema): T {
     // Check if schema is a Joi ObjectSchema
     if (schema && typeof (schema as ObjectSchema).validate === 'function') {
-      const { error, value } = (schema as ObjectSchema).validate(data, { abortEarly: false });
+      const { error, value } = (schema as ObjectSchema).validate(data, {
+        abortEarly: false,
+      });
       if (error) {
         throw ValidationException.validation(
           error.details.map((e: ValidationErrorItem) => e.message).join(', ')

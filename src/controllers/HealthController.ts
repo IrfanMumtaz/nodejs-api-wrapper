@@ -1,12 +1,12 @@
-import Controller from './Controller';
 import { sutando } from 'sutando';
 import {
   ExpressRequest,
   ExpressResponse,
-  ReadinessStatus,
   LivenessStatus,
   MemoryUsage,
+  ReadinessStatus,
 } from '../types';
+import Controller from './Controller';
 
 class HealthController extends Controller {
   async healthCheck(req: ExpressRequest, res: ExpressResponse): Promise<void> {
@@ -14,14 +14,14 @@ class HealthController extends Controller {
       req,
       res,
       async (req: ExpressRequest, res: ExpressResponse) => {
-        const health: any = {
-          status: 'healthy' as const,
+        const health = {
+          status: 'healthy',
           timestamp: new Date().toISOString(),
           uptime: process.uptime(),
           environment: process.env.NODE_ENV || 'development',
           version: process.env.npm_package_version || '1.0.0',
           checks: {
-            database: 'healthy' as const,
+            database: 'healthy',
             memory: this.getMemoryUsage(),
             cpu: process.cpuUsage(),
           },
@@ -29,12 +29,14 @@ class HealthController extends Controller {
 
         // Check database connection
         try {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           await (sutando as any).raw('SELECT 1');
           health.checks.database = 'healthy';
         } catch (error) {
           health.checks.database = 'unhealthy';
           health.status = 'unhealthy';
-          health.error = (error as Error).message;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (health as any).error = (error as Error).message;
         }
 
         const statusCode = health.status === 'healthy' ? 200 : 503;
@@ -67,6 +69,7 @@ class HealthController extends Controller {
 
         // Check if application is ready to receive traffic
         try {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           await (sutando as any).raw('SELECT 1');
           readiness.checks.database = 'ready';
         } catch (error) {
@@ -78,7 +81,7 @@ class HealthController extends Controller {
         const statusCode = readiness.status === 'ready' ? 200 : 503;
         return this.response(
           res,
-          readiness as any,
+          readiness as unknown as Record<string, unknown>,
           statusCode,
           `Service is ${readiness.status}`
         );
@@ -101,7 +104,12 @@ class HealthController extends Controller {
           memory: this.getMemoryUsage(),
         };
 
-        return this.response(res, liveness as any, 200, 'Service is alive');
+        return this.response(
+          res,
+          liveness as unknown as Record<string, unknown>,
+          200,
+          'Service is alive'
+        );
       }
     );
   }

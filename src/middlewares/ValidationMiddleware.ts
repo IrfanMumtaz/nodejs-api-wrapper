@@ -21,10 +21,14 @@ class ValidationMiddleware {
 
         // Check if schema is a Joi ObjectSchema
         if (schema && typeof (schema as ObjectSchema).validate === 'function') {
-          const { error, value } = (schema as ObjectSchema).validate(req.body, { abortEarly: false });
+          const { error, value } = (schema as ObjectSchema).validate(req.body, {
+            abortEarly: false,
+          });
           if (error) {
             throw ValidationException.validation(
-              error.details.map((e: ValidationErrorItem) => e.message).join(', ')
+              error.details
+                .map((e: ValidationErrorItem) => e.message)
+                .join(', ')
             );
           }
 

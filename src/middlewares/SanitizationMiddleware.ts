@@ -12,7 +12,10 @@ export const sanitizationMiddleware = (
 
   // Sanitize query parameters
   if (req.query) {
-    req.query = sanitizeObject(req.query) as Record<string, string | string[] | undefined>;
+    req.query = sanitizeObject(req.query) as Record<
+      string,
+      string | string[] | undefined
+    >;
   }
 
   // Sanitize URL parameters

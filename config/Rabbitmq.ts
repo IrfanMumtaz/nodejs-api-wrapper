@@ -30,6 +30,7 @@ interface ConsumeOptions {
 // RabbitMQConnectionConfig interface removed as it was unused
 
 class RabbitMQConnection {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private connection: any = null;
   private channel: Channel | null = null;
   private isConnecting: boolean = false;
