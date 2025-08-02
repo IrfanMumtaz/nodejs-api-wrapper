@@ -1,0 +1,18 @@
+441b2a12725cf12386a7340b9dbad19f
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const BaseException_1 = __importDefault(require("./BaseException"));
+// ValidationExceptionConfig interface removed as it was unused
+class ValidationException extends BaseException_1.default {
+    constructor(message = 'Validation Exception', code = 422) {
+        super(message, code, 422);
+    }
+    static validation(msg) {
+        return new ValidationException(msg || 'Validation Exception');
+    }
+}
+exports.default = ValidationException;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJmaWxlIjoiRTpcXEZyZWVsYW5jZXJcXG5vZGVqcy1hcGktd3JhcHBlclxcc3JjXFxleGNlcHRpb25zXFxWYWxpZGF0aW9uRXhjZXB0aW9uLnRzIiwibWFwcGluZ3MiOiI7Ozs7O0FBQUEsb0VBQTRDO0FBRTVDLCtEQUErRDtBQUUvRCxNQUFNLG1CQUFvQixTQUFRLHVCQUFhO0lBQzdDLFlBQVksVUFBa0Isc0JBQXNCLEVBQUUsT0FBZSxHQUFHO1FBQ3RFLEtBQUssQ0FBQyxPQUFPLEVBQUUsSUFBSSxFQUFFLEdBQUcsQ0FBQyxDQUFDO0lBQzVCLENBQUM7SUFFRCxNQUFNLENBQUMsVUFBVSxDQUFDLEdBQW1CO1FBQ25DLE9BQU8sSUFBSSxtQkFBbUIsQ0FBQyxHQUFHLElBQUksc0JBQXNCLENBQUMsQ0FBQztJQUNoRSxDQUFDO0NBQ0Y7QUFFRCxrQkFBZSxtQkFBbUIsQ0FBQyIsIm5hbWVzIjpbXSwic291cmNlcyI6WyJFOlxcRnJlZWxhbmNlclxcbm9kZWpzLWFwaS13cmFwcGVyXFxzcmNcXGV4Y2VwdGlvbnNcXFZhbGlkYXRpb25FeGNlcHRpb24udHMiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IEJhc2VFeGNlcHRpb24gZnJvbSAnLi9CYXNlRXhjZXB0aW9uJztcblxuLy8gVmFsaWRhdGlvbkV4Y2VwdGlvbkNvbmZpZyBpbnRlcmZhY2UgcmVtb3ZlZCBhcyBpdCB3YXMgdW51c2VkXG5cbmNsYXNzIFZhbGlkYXRpb25FeGNlcHRpb24gZXh0ZW5kcyBCYXNlRXhjZXB0aW9uIHtcbiAgY29uc3RydWN0b3IobWVzc2FnZTogc3RyaW5nID0gJ1ZhbGlkYXRpb24gRXhjZXB0aW9uJywgY29kZTogbnVtYmVyID0gNDIyKSB7XG4gICAgc3VwZXIobWVzc2FnZSwgY29kZSwgNDIyKTtcbiAgfVxuXG4gIHN0YXRpYyB2YWxpZGF0aW9uKG1zZz86IHN0cmluZyB8IG51bGwpOiBWYWxpZGF0aW9uRXhjZXB0aW9uIHtcbiAgICByZXR1cm4gbmV3IFZhbGlkYXRpb25FeGNlcHRpb24obXNnIHx8ICdWYWxpZGF0aW9uIEV4Y2VwdGlvbicpO1xuICB9XG59XG5cbmV4cG9ydCBkZWZhdWx0IFZhbGlkYXRpb25FeGNlcHRpb247XG4iXSwidmVyc2lvbiI6M30=

@@ -2,395 +2,221 @@
 
 A comprehensive Node.js API wrapper with centralized exception handling, middleware management, and structured architecture for building scalable REST APIs.
 
-## Author
-
-**Irfan Mumtaz** - Full Stack Developer
-
-- **GitHub**: [@irfan](https://github.com/irfanmumtaz)
-- **LinkedIn**: [Irfan](https://www.linkedin.com/in/imirfanmumtaz)
-- **Email**: im.irfanmumtaz21@gmail.com
-
-This project is designed to provide a robust foundation for building REST APIs with Node.js and Express.js, featuring centralized exception handling, middleware architecture, and structured code organization.
-
 ## Features
 
-- **Centralized Exception Handling**: Global error handling with standardized response format
-- **Middleware Architecture**: Modular middleware system for request processing
-- **Structured Architecture**: Organized folder structure with controllers, services, models, and business logic
-- **Environment Configuration**: Environment variable management with dotenv
-- **Express.js Framework**: Built on Express.js for robust API development
-- **Sutando ORM**: Database integration with Sutando ORM for efficient data management
+- 🏗️ **Structured Architecture**: Clean separation of concerns with controllers, services, and models
+- 🛡️ **Exception Handling**: Centralized error handling with custom exception classes
+- 🔧 **Middleware Management**: Built-in middleware for logging, validation, and security
+- 🧪 **Testing**: Comprehensive testing setup with Jest and parallel test execution
+- 📊 **Database Support**: Multiple database support with Sutando ORM
+- 🔄 **Message Queues**: RabbitMQ integration for background processing
+- ⏰ **Cron Jobs**: Scheduled task management
+- 🎯 **TypeScript**: Full TypeScript support with strict type checking
+
+## Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+- Git
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/irfan/nodejs-api-wrapper.git
+cd nodejs-api-wrapper
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env
+
+# Run development server
+npm run dev
+```
+
+## Development Setup
+
+### IDE Configuration
+
+This project includes comprehensive IDE configurations for VS Code:
+
+#### Required Extensions
+
+Install the recommended extensions for VS Code:
+- TypeScript and JavaScript Language Features
+- ESLint
+- Prettier - Code formatter
+- Jest Runner
+- Path Intellisense
+- Auto Rename Tag
+
+#### Features
+
+- **Auto-formatting**: Code is automatically formatted on save
+- **Linting**: ESLint runs on save to catch errors and enforce code style
+- **Debugging**: Pre-configured debug configurations for application and tests
+- **Tasks**: Built-in tasks for common operations (build, test, lint)
+- **Git Integration**: Husky hooks for pre-commit checks
+
+#### VS Code Settings
+
+The workspace includes optimized settings for:
+- TypeScript auto-imports and path resolution
+- Editor formatting and code actions
+- File exclusions and search patterns
+- Terminal configuration for Git Bash
+
+### Code Quality Tools
+
+#### Linting and Formatting
+
+```bash
+# Run linting
+npm run lint
+
+# Fix linting issues
+npm run lint:fix
+
+# Format code
+npm run format
+
+# Check formatting
+npm run format:check
+```
+
+#### Type Checking
+
+```bash
+# Run TypeScript type checking
+npm run type-check
+```
+
+#### Quality Checks
+
+```bash
+# Run all quality checks
+npm run quality
+
+# Fix all quality issues
+npm run quality:fix
+```
+
+### Git Hooks
+
+The project uses Husky for Git hooks:
+
+- **Pre-commit**: Runs type checking, linting, and tests
+- **Commit-msg**: Validates commit message format (conventional commits)
+
+### Conventional Commits
+
+This project follows the [Conventional Commits](https://www.conventionalcommits.org/) specification:
+
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+Types:
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation changes
+- `style`: Code style changes
+- `refactor`: Code refactoring
+- `perf`: Performance improvements
+- `test`: Test changes
+- `build`: Build system changes
+- `ci`: CI/CD changes
+- `chore`: Maintenance tasks
 
 ## Project Structure
 
 ```
+├── config/                 # Configuration files
+├── consumers/             # Message queue consumers
+├── cron/                  # Scheduled tasks
+├── migrations/            # Database migrations
+├── routes/                # Route definitions
 ├── src/
-│   ├── controller/          # Controller classes
-│   ├── model/               # Data models
-│   ├── exceptions/          # Custom exception classes
-│   ├── requests/            # Request validation
-│   └── resources/           # Response formatting
-├── routes/                  # API route definitions
-├── index.js                 # Application entry point
-├── package.json             # Dependencies and scripts
-└── .env                     # Environment variables
+│   ├── container/         # Dependency injection container
+│   ├── controllers/       # Request handlers
+│   ├── exceptions/        # Custom exception classes
+│   ├── middlewares/       # Express middlewares
+│   ├── models/            # Database models
+│   ├── requests/          # Request validation schemas
+│   ├── resources/         # Response transformers
+│   ├── services/          # Business logic
+│   └── types/             # TypeScript type definitions
+├── tests/                 # Test files
+└── index.ts              # Application entry point
 ```
 
-## Installation
+## Available Scripts
 
-1. Clone the repository:
-```bash
-git clone git@github.com:IrfanMumtaz/nodejs-api-wrapper.git
-cd nodejs-api-wrapper
-```
+### Development
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build the project
+- `npm run build:clean` - Clean build directory and rebuild
 
-2. Install dependencies:
-```bash
-npm install
-```
+### Testing
+- `npm run test` - Run tests
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:coverage` - Run tests with coverage
+- `npm run test:parallel` - Run tests in parallel
 
-3. Create environment file:
-```bash
-cp .env.example .env
-# Edit .env with your configuration
-```
+### Code Quality
+- `npm run lint` - Run ESLint
+- `npm run lint:fix` - Fix ESLint issues
+- `npm run format` - Format code with Prettier
+- `npm run type-check` - Run TypeScript type checking
+- `npm run quality` - Run all quality checks
 
-4. Start the server:
-```bash
-npm start
-```
+## Environment Variables
 
-## Architecture Overview
-
-### Controllers
-Controllers handle HTTP requests and responses. They extend the base `Controller` class and contain route-specific logic.
-
-```javascript
-const Controller = require('@controllers/Controller');
-
-class HomeController extends Controller {
-  getSampleResponse(req, res) {
-    // Handle request logic
-  }
-}
-```
-
-### Models
-Models represent data structures and database entities. They define the structure of your application's data.
-
-```javascript
-const { Model } = require('sutando');
-
-class User extends Model {
-}
-
-module.exports = User
-```
-
-## Exception Handling
-
-The wrapper implements centralized exception handling with a standardized response format:
-
-```javascript
-{
-  "data": {},
-  "error": {},
-  "success": false,
-  "message": "Error message"
-}
-```
-
-### Custom Exceptions
-Create custom exceptions by extending the base Error class:
-
-```javascript
-const BaseException = require(`@exceptions/BaseException`);
-
-class RouteException extends BaseException {
-
-    constructor(message = 'Route Exception', code = 400) {
-        super(message, code, 400);
-    }
-
-    static badRoute(msg = null) {
-        return new RouteException(msg || "Bad request, route does not exist")
-    }
-}
-
-module.exports = RouteException; 
-```
-
-### Request Validation
-Create custom request validation class in requests folder using joi:
-
-```javascript
-const Joi = require('joi');
-
-const UserRequest = Joi.object({
-    name: Joi.string().alphanum().min(3).max(30).required(),
-});
-
-module.exports = UserRequest
-```
-
-
-### Resource Structuring
-Create custom Resource class for the structuring the response data in a unified way:
-
-```javascript
-const BaseResource = require(`@resources/BaseResource`);
-
-class HomeResource extends BaseResource{
-
-    
-    static setData(data) {
-        return {
-            "id": data.id,
-            "name": data.name,
-        }
-    }
-}
-
-module.exports = HomeResource
-```
-
-## API Routes
-
-Routes are defined in the `routes/` directory and follow RESTful conventions:
-
-```javascript
-const express = require('express');
-const router = express.Router();
-
-router.get('/sample', (req, res) => {
-  // Route handler
-});
-
-module.exports = router;
-```
-
-## Middleware
-
-The wrapper supports custom middleware for request processing, authentication, validation, and more.
-
-### Global Middleware
-Middleware can be applied globally in `index.js`:
-
-```javascript
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-```
-
-### Route-specific Middleware
-Apply middleware to specific routes:
-
-```javascript
-router.use('/protected', authMiddleware);
-```
-
-## Database Integration
-
-### Sutando ORM Setup
-The wrapper uses Sutando ORM for database operations. Configure your database connection in the `.env` file:
+Create a `.env` file in the root directory:
 
 ```env
-DB_CONNECTION=mysql
-DB_HOST=localhost
-DB_USER=your_username
-DB_PASSWORD=your_password
-DB_DATABASE=your_database
-DB_PORT=3306
-```
-
-### Database Configuration
-Sutando ORM requires the following environment variables:
-
-- `DB_CONNECTION`: Database driver (mysql2, pg, sqlite3)
-- `DB_HOST`: Database host address
-- `DB_USER`: Database username
-- `DB_PASSWORD`: Database password
-- `DB_DATABASE`: Database name
-- `DB_PORT`: Database port number
-
-### Migrations
-Database migrations help manage schema changes. Sutando provides a powerful migration system for version control of your database schema.
-
-#### Migration Commands
-```bash
-# Generate a new migration
-npx sutando migrate:make create_users_table
-
-# Run all pending migrations
-npx sutando migrate:run
-
-# Check migration status
-npx sutando migrate:status
-
-# Rollback the last batch of migrations
-npx sutando migrate:rollback
-
-# Rollback a specific number of migrations
-npx sutando migrate:rollback --step=5
-```
-
-#### Migration Structure
-Each migration file contains `up` and `down` methods:
-
-```javascript
-const { Migration } = require('sutando');
-
-module.exports = class extends Migration {
-  async up(schema) {
-    await schema.createTable('users', (table) => {
-      table.increments('id');
-      table.string('name');
-      table.string('email').unique();
-      table.timestamps();
-    });
-  }
-
-  async down(schema) {
-    await schema.dropTableIfExists('users');
-  }
-};
-```
-
-For more detailed information about migrations, visit the [Sutando Migrations Guide](https://sutando.org/guide/migrations.html).
-
-## Environment Configuration
-
-Environment variables are managed through the `.env` file:
-
-```env
+# Server Configuration
 PORT=3000
 NODE_ENV=development
 
-# Database Configuration (Sutando ORM)
-DB_CONNECTION=mysql
+# Database Configuration
 DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=your_database
 DB_USER=your_username
 DB_PASSWORD=your_password
-DB_DATABASE=your_database
-DB_PORT=3306
+
+# RabbitMQ Configuration
+RABBITMQ_URL=amqp://localhost
+
+# Security
+JWT_SECRET=your_jwt_secret
 ```
-
-## API Documentation
-
-### Standard Response Format
-All API responses follow a consistent format:
-
-**Success Response:**
-```json
-{
-  "data": {},
-  "error": {},
-  "success": true,
-  "message": "Operation successful"
-}
-```
-
-**Error Response:**
-```json
-{
-  "data": {},
-  "error": {
-    "name": "ErrorName",
-    "stack": "Error stack trace"
-  },
-  "success": false,
-  "message": "Error message"
-}
-```
-
-## Getting Started
-
-1. **Create a new controller:**
-```javascript
-// src/controller/UserController.js
-const Controller = require('@controllers/Controller');
-
-class UserController extends Controller {
-  async getUsers(req, res) {
-    // Implementation
-  }
-}
-```
-
-2. **Add routes:**
-```javascript
-// routes/api.js
-const UserController = require('@controller/UserController');
-const userController = new UserController();
-
-router.get('/users', (req, res) => userController.getUsers(req, res));
-```
-
-3. **Create custom exceptions:**
-```javascript
-// src/exceptions/ValidationException.js
-class ValidationException extends Error {
-  constructor(message) {
-    super(message);
-    this.name = 'ValidationException';
-    this.status = 400;
-  }
-}
-```
-
-## Development
-
-### Running in Development
-```bash
-npm run dev
-```
-
-### Running in Production
-```bash
-npm run start
-```
-
-
-## Dependencies
-
-- **Express.js**: Web framework
-- **dotenv**: Environment variable management
-- **Sutando ORM**: Database ORM for efficient data management
-- **Additional packages**: Add as needed for your specific use case
 
 ## Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes following the coding standards
+4. Run quality checks (`npm run quality`)
+5. Commit your changes with conventional commit format
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
 
 ## License
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-### Why MIT License?
+## Author
 
-The MIT License is one of the most popular open-source licenses because it:
-
-- **Permissive**: Allows commercial use, modification, distribution, and private use
-- **Simple**: Easy to understand and implement
-- **Compatible**: Works well with other licenses
-- **Developer-friendly**: Minimal restrictions while providing liability protection
-- **Widely accepted**: Used by major projects like React, Vue.js, and Node.js
-
-### License Summary
-
-- ✅ **Commercial use**: Allowed
-- ✅ **Modification**: Allowed  
-- ✅ **Distribution**: Allowed
-- ✅ **Private use**: Allowed
-- ✅ **Patent use**: Allowed
-- ❌ **Liability**: Limited
-- ❌ **Warranty**: None
-
-For more information about the MIT License, visit [choosealicense.com](https://choosealicense.com/licenses/mit/).
-
-## Support
-
-For questions and support, please open an issue in the GitHub repository.
+**Irfan Mumtaz**
+- Email: im.irfanmumtaz21@gmail.com
+- GitHub: [@irfanmumtaz](https://github.com/irfanmumtaz)

@@ -1,0 +1,53 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "lib": ["ES2020"],
+    "outDir": "./dist",
+    "rootDir": "./",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "removeComments": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "@config/*": ["config/*"],
+      "@controllers/*": ["src/controllers/*"],
+      "@cron/*": ["cron/*"],
+      "@exceptions/*": ["src/exceptions/*"],
+      "@middlewares/*": ["src/middlewares/*"],
+      "@models/*": ["src/models/*"],
+      "@requests/*": ["src/requests/*"],
+      "@resources/*": ["src/resources/*"],
+      "@routes/*": ["routes/*"],
+      "@services/*": ["src/services/*"],
+      "@container/*": ["src/container/*"]
+    }
+  },
+  "include": [
+    "src/**/*",
+    "config/**/*",
+    "routes/**/*",
+    "cron/**/*",
+    "consumers/**/*",
+    "index.ts",
+    "Registry.ts",
+    "jest.config.js",
+    "sutando.config.ts"
+  ],
+  "exclude": ["node_modules", "dist", "tests", "coverage", "logs"]
+}

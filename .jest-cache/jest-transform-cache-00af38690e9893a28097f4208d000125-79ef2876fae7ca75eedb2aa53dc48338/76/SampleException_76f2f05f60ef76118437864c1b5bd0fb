@@ -1,0 +1,18 @@
+98250600a77ba730287432e2ee8b1ef2
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const BaseException_1 = __importDefault(require("./BaseException"));
+// SampleExceptionConfig interface removed as it was unused
+class SampleException extends BaseException_1.default {
+    constructor(message = 'Testing', code = 422) {
+        super(message, code, 400);
+    }
+    static sample(msg) {
+        return new SampleException(msg || 'Testing Exception');
+    }
+}
+exports.default = SampleException;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJmaWxlIjoiRTpcXEZyZWVsYW5jZXJcXG5vZGVqcy1hcGktd3JhcHBlclxcc3JjXFxleGNlcHRpb25zXFxTYW1wbGVFeGNlcHRpb24udHMiLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQSxvRUFBNEM7QUFFNUMsMkRBQTJEO0FBRTNELE1BQU0sZUFBZ0IsU0FBUSx1QkFBYTtJQUN6QyxZQUFZLFVBQWtCLFNBQVMsRUFBRSxPQUFlLEdBQUc7UUFDekQsS0FBSyxDQUFDLE9BQU8sRUFBRSxJQUFJLEVBQUUsR0FBRyxDQUFDLENBQUM7SUFDNUIsQ0FBQztJQUVELE1BQU0sQ0FBQyxNQUFNLENBQUMsR0FBbUI7UUFDL0IsT0FBTyxJQUFJLGVBQWUsQ0FBQyxHQUFHLElBQUksbUJBQW1CLENBQUMsQ0FBQztJQUN6RCxDQUFDO0NBQ0Y7QUFFRCxrQkFBZSxlQUFlLENBQUMiLCJuYW1lcyI6W10sInNvdXJjZXMiOlsiRTpcXEZyZWVsYW5jZXJcXG5vZGVqcy1hcGktd3JhcHBlclxcc3JjXFxleGNlcHRpb25zXFxTYW1wbGVFeGNlcHRpb24udHMiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IEJhc2VFeGNlcHRpb24gZnJvbSAnLi9CYXNlRXhjZXB0aW9uJztcblxuLy8gU2FtcGxlRXhjZXB0aW9uQ29uZmlnIGludGVyZmFjZSByZW1vdmVkIGFzIGl0IHdhcyB1bnVzZWRcblxuY2xhc3MgU2FtcGxlRXhjZXB0aW9uIGV4dGVuZHMgQmFzZUV4Y2VwdGlvbiB7XG4gIGNvbnN0cnVjdG9yKG1lc3NhZ2U6IHN0cmluZyA9ICdUZXN0aW5nJywgY29kZTogbnVtYmVyID0gNDIyKSB7XG4gICAgc3VwZXIobWVzc2FnZSwgY29kZSwgNDAwKTtcbiAgfVxuXG4gIHN0YXRpYyBzYW1wbGUobXNnPzogc3RyaW5nIHwgbnVsbCk6IFNhbXBsZUV4Y2VwdGlvbiB7XG4gICAgcmV0dXJuIG5ldyBTYW1wbGVFeGNlcHRpb24obXNnIHx8ICdUZXN0aW5nIEV4Y2VwdGlvbicpO1xuICB9XG59XG5cbmV4cG9ydCBkZWZhdWx0IFNhbXBsZUV4Y2VwdGlvbjtcbiJdLCJ2ZXJzaW9uIjozfQ==
