@@ -14,7 +14,26 @@
       "internalConsoleOptions": "neverOpen",
       "skipFiles": ["<node_internals>/**"],
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-      "sourceMaps": true
+      "sourceMaps": true,
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ]
+    },
+    {
+      "name": "Debug Application (Built)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/dist/index.js",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"],
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "sourceMaps": true,
+      "preLaunchTask": "npm: build"
     },
     {
       "name": "Debug Tests",
@@ -26,7 +45,8 @@
       "internalConsoleOptions": "neverOpen",
       "env": {
         "NODE_ENV": "test"
-      }
+      },
+      "skipFiles": ["<node_internals>/**"]
     },
     {
       "name": "Debug Current Test File",
@@ -38,7 +58,8 @@
       "internalConsoleOptions": "neverOpen",
       "env": {
         "NODE_ENV": "test"
-      }
+      },
+      "skipFiles": ["<node_internals>/**"]
     }
   ]
 }
