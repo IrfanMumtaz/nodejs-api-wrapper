@@ -119,3 +119,4 @@ temp/
 test-results/
 playwright-report/
 test-results.xml
+.jest-cache
