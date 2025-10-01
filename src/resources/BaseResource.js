@@ -1,14 +1,10 @@
 const ResponseException = require(`@exceptions/ResponseException`);
-const { Collection } = require("sutando");
 
 class BaseResource{
     
     constructor(data) {
         if (data instanceof Array) {
             return this.dataArray(data)
-        }
-        else if (data instanceof Collection) {
-            return this.dataArray(data.toArray())
         }
         else if (data instanceof Object) {
             return this.dataObject(data)

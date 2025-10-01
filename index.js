@@ -15,7 +15,7 @@ const registry = require(`./Registry`);
 registry.routes(app);
 registry.errors(app);
 
-const port = process.env.APP_PORT || 3000;
+const port = process.env.APP_PORT || 9999;
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`, `(${(new Date()).toString()})`);
 }); 

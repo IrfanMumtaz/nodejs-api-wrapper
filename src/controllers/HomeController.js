@@ -1,23 +1,22 @@
 const Controller = require(`@controllers/Controller`);
 const SampleException = require(`@exceptions/SampleException`);
 const HomeResource = require(`@resources/HomeResource`);
-const User = require("@models/User")
+const UserService = require("@services/UserService");
 
 class HomeController extends Controller {
 
     async getCollectionResponse(req, res) {
         
-        const users = await User.query().get();
+        const users = await UserService.getAll();
 
         return this.response(res, new HomeResource(users));
     }
     
     async getSingleResponse(req, res) {
-        const user = new User({
+        const user = await UserService.create({
             name: req.body.name
-        })
+        });
 
-        await user.save();
         return this.response(res, new HomeResource(user), 201);
     }
     

@@ -7,7 +7,13 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "rabbitmq": "node consumers",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:studio": "prisma studio",
+    "db:seed": "node prisma/seed.js"
   },
   "keywords": [
     "nodejs",
@@ -17,7 +23,7 @@
     "middleware",
     "exception-handling",
     "rest-api",
-    "sutando",
+    "prisma",
     "orm"
   ],
   "author": {
@@ -35,16 +41,15 @@
   },
   "homepage": "https://github.com/irfan/nodejs-api-wrapper#readme",
   "dependencies": {
+    "@prisma/client": "^6.16.3",
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
     "joi": "^17.13.3",
     "module-alias": "^2.2.3",
-    "mysql": "^2.18.1",
     "mysql2": "^3.14.2",
     "node-cron": "^4.2.1",
     "pg": "^8.16.3",
-    "sqlite3": "^5.1.7",
-    "sutando": "^1.7.2",
+    "prisma": "^6.16.3",
     "winston": "^3.17.0",
     "winston-daily-rotate-file": "^5.0.0"
   },
@@ -57,6 +62,7 @@
     "@models": "./src/models",
     "@requests": "src/requests",
     "@resources": "src/resources",
-    "@routes": "routes"
+    "@routes": "routes",
+    "@services": "src/services"
   }
 }

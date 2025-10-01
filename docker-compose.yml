@@ -1,0 +1,20 @@
+services:
+  app:
+    build: .
+    ports:
+      - "9999:9999"
+    environment:
+      - NODE_ENV=production
+      - PORT=9999
+    env_file:
+      - .env
+    restart: unless-stopped
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - shared_local_network
+
+networks:
+  shared_local_network:
+    external: true

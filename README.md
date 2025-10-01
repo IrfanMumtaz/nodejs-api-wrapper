@@ -19,18 +19,22 @@ This project is designed to provide a robust foundation for building REST APIs w
 - **Structured Architecture**: Organized folder structure with controllers, services, models, and business logic
 - **Environment Configuration**: Environment variable management with dotenv
 - **Express.js Framework**: Built on Express.js for robust API development
-- **Sutando ORM**: Database integration with Sutando ORM for efficient data management
+- **Prisma ORM**: Database integration with Prisma ORM for type-safe and efficient data management
 
 ## Project Structure
 
 ```
 ├── src/
-│   ├── controller/          # Controller classes
-│   ├── model/               # Data models
+│   ├── controllers/         # Controller classes
+│   ├── services/            # Service layer for database operations
 │   ├── exceptions/          # Custom exception classes
 │   ├── requests/            # Request validation
 │   └── resources/           # Response formatting
+├── prisma/
+│   ├── schema.prisma        # Database schema definition
+│   └── migrations/          # Database migrations
 ├── routes/                  # API route definitions
+├── config/                  # Configuration files
 ├── index.js                 # Application entry point
 ├── package.json             # Dependencies and scripts
 └── .env                     # Environment variables
@@ -75,16 +79,23 @@ class HomeController extends Controller {
 }
 ```
 
-### Models
-Models represent data structures and database entities. They define the structure of your application's data.
+### Services
+Services handle database operations and business logic. They provide a clean interface for data access.
 
 ```javascript
-const { Model } = require('sutando');
+const prisma = require('@config/db');
 
-class User extends Model {
+class UserService {
+  static async getAll() {
+    return await prisma.user.findMany();
+  }
+  
+  static async create(userData) {
+    return await prisma.user.create({ data: userData });
+  }
 }
 
-module.exports = User
+module.exports = UserService;
 ```
 
 ## Exception Handling
@@ -190,72 +201,62 @@ router.use('/protected', authMiddleware);
 
 ## Database Integration
 
-### Sutando ORM Setup
-The wrapper uses Sutando ORM for database operations. Configure your database connection in the `.env` file:
+### Prisma ORM Setup
+The wrapper uses Prisma ORM for database operations. Configure your database connection in the `.env` file:
 
 ```env
-DB_CONNECTION=mysql
-DB_HOST=localhost
-DB_USER=your_username
-DB_PASSWORD=your_password
-DB_DATABASE=your_database
-DB_PORT=3306
+DATABASE_URL="postgresql://username:password@localhost:5432/database_name?schema=public"
 ```
 
 ### Database Configuration
-Sutando ORM requires the following environment variables:
+Prisma ORM uses a single `DATABASE_URL` environment variable that supports multiple database providers:
 
-- `DB_CONNECTION`: Database driver (mysql2, pg, sqlite3)
-- `DB_HOST`: Database host address
-- `DB_USER`: Database username
-- `DB_PASSWORD`: Database password
-- `DB_DATABASE`: Database name
-- `DB_PORT`: Database port number
+- **PostgreSQL**: `postgresql://username:password@localhost:5432/database_name?schema=public`
+- **MySQL**: `mysql://username:password@localhost:3306/database_name`
+- **SQLite**: `file:./dev.db`
 
-### Migrations
-Database migrations help manage schema changes. Sutando provides a powerful migration system for version control of your database schema.
+### Schema Definition
+Database schema is defined in `prisma/schema.prisma`:
 
-#### Migration Commands
+```prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+```
+
+### Database Commands
 ```bash
-# Generate a new migration
-npx sutando migrate:make create_users_table
+# Generate Prisma client
+npm run db:generate
 
-# Run all pending migrations
-npx sutando migrate:run
+# Push schema to database (development)
+npm run db:push
 
-# Check migration status
-npx sutando migrate:status
+# Run migrations (production)
+npm run db:migrate
 
-# Rollback the last batch of migrations
-npx sutando migrate:rollback
+# Deploy migrations
+npm run db:deploy
 
-# Rollback a specific number of migrations
-npx sutando migrate:rollback --step=5
+# Open Prisma Studio
+npm run db:studio
 ```
 
-#### Migration Structure
-Each migration file contains `up` and `down` methods:
-
-```javascript
-const { Migration } = require('sutando');
-
-module.exports = class extends Migration {
-  async up(schema) {
-    await schema.createTable('users', (table) => {
-      table.increments('id');
-      table.string('name');
-      table.string('email').unique();
-      table.timestamps();
-    });
-  }
-
-  async down(schema) {
-    await schema.dropTableIfExists('users');
-  }
-};
-```
-
-For more detailed information about migrations, visit the [Sutando Migrations Guide](https://sutando.org/guide/migrations.html).
+For more detailed information, visit the [Prisma Documentation](https://www.prisma.io/docs/).
 
 ## Environment Configuration
 
@@ -265,13 +266,8 @@ Environment variables are managed through the `.env` file:
 PORT=3000
 NODE_ENV=development
 
-# Database Configuration (Sutando ORM)
-DB_CONNECTION=mysql
-DB_HOST=localhost
-DB_USER=your_username
-DB_PASSWORD=your_password
-DB_DATABASE=your_database
-DB_PORT=3306
+# Database Configuration (Prisma ORM)
+DATABASE_URL="postgresql://username:password@localhost:5432/database_name?schema=public"
 ```
 
 ## API Documentation
@@ -306,12 +302,14 @@ All API responses follow a consistent format:
 
 1. **Create a new controller:**
 ```javascript
-// src/controller/UserController.js
+// src/controllers/UserController.js
 const Controller = require('@controllers/Controller');
+const UserService = require('@services/UserService');
 
 class UserController extends Controller {
   async getUsers(req, res) {
-    // Implementation
+    const users = await UserService.getAll();
+    return this.response(res, new UserResource(users));
   }
 }
 ```
@@ -319,7 +317,7 @@ class UserController extends Controller {
 2. **Add routes:**
 ```javascript
 // routes/api.js
-const UserController = require('@controller/UserController');
+const UserController = require('@controllers/UserController');
 const userController = new UserController();
 
 router.get('/users', (req, res) => userController.getUsers(req, res));
@@ -354,7 +352,7 @@ npm run start
 
 - **Express.js**: Web framework
 - **dotenv**: Environment variable management
-- **Sutando ORM**: Database ORM for efficient data management
+- **Prisma ORM**: Type-safe database ORM for efficient data management
 - **Additional packages**: Add as needed for your specific use case
 
 ## Contributing
